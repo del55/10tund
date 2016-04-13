@@ -30,6 +30,23 @@ $object -> date = date("c");
 
 //saadud tweedid
 $object->statuses = json_decode($dataFromAPI)->statuses;
+
+//lisan vanad tekstifailist juurde
+foreach ($file_data -> statuses as $old_status) {
+  $exists = false;
+  foreach ($object ->statuses as $new_status) {
+    //kas on olemas
+    if($old_status -> id ==$new_status ->id){
+      $exists=true;
+    }
+  }
+  if($exists == false){
+    //ei olnud olemas
+    array_push($object->statuses, $old_status);
+  }
+}
+
+
 file_put_contents($file_name, json_encode($object));
 echo json_encode($object);
  ?>
