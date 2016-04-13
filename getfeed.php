@@ -7,6 +7,16 @@ $url = "https://api.twitter.com/1.1/search/tweets.json";
 $getField = "?q=%23Paris&result_type=recent";
 $requestMethod = "GET";
 
+$file_data=json_decode(file_get_contents($file_name));
+
+//võrdlen aega
+$delay=10;
+if(strtotime(date("c"))-(strtotime($file_data->date)) < $delay){
+ //on liiga vähe möödas
+ echo json_encode($file_data);
+ return;
+}
+
 $twitter = new TwitterAPIExchange($config);
 $dataFromAPI = $twitter->setGetfield($getField)
 ->buildOauth($url, $requestMethod)
