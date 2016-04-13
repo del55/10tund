@@ -1,8 +1,16 @@
+
+var $grid;
+
 $(function() {
 
   //laetud
 
   getTweets();
+
+  $grid = $('#content').isotope({
+	  //Ć¼ks kast
+	  itemSelector: ".item"
+  });
 
 
 });
@@ -46,6 +54,19 @@ function printTweets(newTweets){
 
 	});
 
-	$("#content").append( $(html) );
+	//$("#content").append( $(html) );
+
+	var tweetsHTML = $(html);
+
+	$grid.prepend(tweetsHTML)
+	     .isotope('prepended', tweetsHTML)
+		 .isotope('layout');
+
+	//oota ja siis kĆ¼si uuesti
+	window.setTimeout(function(){
+		getTweets();
+	},10000);
+
+
 
 }
